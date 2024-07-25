@@ -3,7 +3,7 @@ A haskell program that creates an unsolvable "FOX" word-search puzzle
 ### How to use
 
 - Download FOX.exe [here](https://github.com/Awelson/FOX/releases/tag/v0.1.0.0)
-- Navigate to the directory where FOX.exe is stored in command prompt
+- Navigate to the directory where FOX.exe is stored with command prompt
 - Type in `FOX n` for any positive integer `n` and press enter
 
 Example :
