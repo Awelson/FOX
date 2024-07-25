@@ -10,6 +10,7 @@ Example :
 
 ```
 > FOX 10
+
 f o f o f x o x o x
 f o o f f x f f o f
 x o o x f o o x x o
