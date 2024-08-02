@@ -11,14 +11,14 @@ Example :
 ```
 > FOX 10
 
-f o f o f x o x o x
-f o o f f x f f o f
-x o o x f o o x x o
-x f f o f x f x o o
-x o x o x o o x o o
-x o o f o o o x x o
-x x x x o o x x x o
-f f f o o f f x x o
-f o f x o o o x x f
-o f f x x o o o o f
+f f o f o o o x o x
+o x f f o o o f f o
+f o f x x o x o o o
+f o f f f f f o o o
+o o f f f o f f x x
+o f o o o o f o f o
+x f o f o f o o o o
+o f f f x o o o f f
+x x f x o o o f x o
+o x x f x f x f x o
 ```
