@@ -10,21 +10,20 @@ import Text.Read (readMaybe)
 import System.Exit (exitFailure)
 
 getElementsSafe :: Matrix a -> [(Int, Int)] -> [a]
-getElementsSafe matrix coords = mapMaybe (\(row, col) -> safeGet row col matrix) coords
+getElementsSafe m coords = mapMaybe (\(row, col) -> safeGet row col m) coords
 
 tryLetters :: Matrix Char -> (Int, Int) -> String -> IO (Matrix Char)
 tryLetters m _ [] = return $ m 
 tryLetters m (i, j) (c:cs) = do
-    let matrix = setElem c (i, j) m
-    let dir1 = getElementsSafe matrix [(i-2,j),(i-1,j),(i,j)]
-    let dir2 = getElementsSafe matrix [(i-2,j-2),(i-1,j-1),(i,j)]
-    let dir3 = getElementsSafe matrix [(i,j-2),(i,j-1),(i,j)]
-    let dir4 = getElementsSafe matrix [(i+2,j-2),(i+1,j-1),(i,j)]
-    let all = dir1 == "fox" || dir1 == "xof" || dir2 == "fox" || dir2 == "xof" || 
-              dir3 == "fox" || dir3 == "xof" || dir4 == "fox" || dir4 == "xof" 
-    if all 
+    let mm = setElem c (i, j) m
+    let dir1 = getElementsSafe mm [(i-2,j),(i-1,j),(i,j)]
+    let dir2 = getElementsSafe mm [(i-2,j-2),(i-1,j-1),(i,j)]
+    let dir3 = getElementsSafe mm [(i,j-2),(i,j-1),(i,j)]
+    let dir4 = getElementsSafe mm [(i+2,j-2),(i+1,j-1),(i,j)]
+    let mall = dir1 == "fox" || dir1 == "xof" || dir2 == "fox" || dir2 == "xof" || dir3 == "fox" || dir3 == "xof" || dir4 == "fox" || dir4 == "xof" 
+    if mall 
         then tryLetters m (i, j) cs
-        else return $ matrix
+        else return $ mm
 
 acc :: Matrix Char -> (Int, Int) -> IO (Matrix Char)
 acc m (i, j) = do
@@ -39,7 +38,7 @@ main = do
             Just n  -> do
                 let size = n
                 let m = matrix size size $ \(_,_) -> 'z'
-                let list = [(i, j) | i <- [1..size], j <- [1..size]]
+                let list = [(j, i) | i <- [1..size], j <- [1..size]]
                 m' <- foldM acc m list
                 let pretty = map (\x -> unwords (map (:[]) x)) (toLists m')
                 -- let pretty = unwords (map (:[]) (toList m'))
