@@ -42,10 +42,13 @@ main = do
                 let list = [(j, i) | i <- [1..size], j <- [1..size]]
                 m' <- foldM acc m list
                 let counts = map (\x -> (head x, length x)) . group . sort $ (toList m')
+                let fcounts = map (\(item, count) -> 
+                            let percentage = 100 * count `div` (size * size)
+                            in item : ": " ++ show percentage ++ "%") counts
                 let pretty = map (\x -> unwords (map (:[]) x)) (toLists m')
                 -- let pretty = unwords (map (:[]) (toList m'))
-                putStr (unlines pretty)
-                print (map (\(item, count) -> (item, 100 * count `div` (size*size))) counts)
+                putStrLn (unlines pretty)
+                putStrLn (unlines fcounts)
             Nothing -> do
                 putStrLn "Not a valid integer"
                 exitFailure
