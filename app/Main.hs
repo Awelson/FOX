@@ -2,6 +2,7 @@ module Main where
 
 import Data.Matrix
 import Data.Maybe
+import Data.List (group, sort)
 import System.Random.Shuffle (shuffleM)
 import Control.Monad (foldM)
 import Control.Monad.Random (evalRandIO)
@@ -27,7 +28,7 @@ tryLetters m (i, j) (c:cs) = do
 
 acc :: Matrix Char -> (Int, Int) -> IO (Matrix Char)
 acc m (i, j) = do
-    scrambled <- evalRandIO $ shuffleM "fox" :: IO (String)
+    scrambled <- evalRandIO $ shuffleM "ffoxx" :: IO (String)
     tryLetters m (i, j) scrambled
 
 main :: IO ()
@@ -40,9 +41,11 @@ main = do
                 let m = matrix size size $ \(_,_) -> 'z'
                 let list = [(j, i) | i <- [1..size], j <- [1..size]]
                 m' <- foldM acc m list
+                let counts = map (\x -> (head x, length x)) . group . sort $ (toList m')
                 let pretty = map (\x -> unwords (map (:[]) x)) (toLists m')
                 -- let pretty = unwords (map (:[]) (toList m'))
                 putStr (unlines pretty)
+                print (map (\(item, count) -> (item, 100 * count `div` (size*size))) counts)
             Nothing -> do
                 putStrLn "Not a valid integer"
                 exitFailure
